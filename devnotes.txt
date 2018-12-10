@@ -1,0 +1,7 @@
+Todo
+
+1. Work out what components are required
+    Selector for pigs
+    Selector for chickens
+    Timer
+    Pig display
