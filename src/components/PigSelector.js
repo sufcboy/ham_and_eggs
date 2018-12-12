@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 
 class PigSelector extends Component {
+    constructor(props) {
+        super(props);
+        this.onSelect = this.onSelect.bind(this);
+    }
+    onSelect(e) {
+        this.props.onSelect('numberOfPigs', e.target.value);
+    }
     render() {
       return (
           <div>
             <p>Select number of pigs</p>
-            <select id="numberOfPigs">
+            <select id="numberOfPigs" onChange={this.onSelect}>
                 <option value="-1">Select number of pigs</option>
                 <option value="10">10</option>
                 <option value="9">9</option>

@@ -1,11 +1,18 @@
 import React, { Component } from 'react';
 
 class ChickenSelector extends Component {
+    constructor(props) {
+        super(props);
+        this.onSelect = this.onSelect.bind(this);
+    }
+    onSelect(e) {
+        this.props.onSelect('numberOfChickens', e.target.value);
+    }
     render() {
       return (
           <div>
             <p>Select number of chickens</p>
-            <select id="numberOfChicken">
+            <select id="numberOfChicken" onChange={this.onSelect}>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
