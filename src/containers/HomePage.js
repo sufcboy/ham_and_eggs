@@ -1,15 +1,12 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React from 'react';
 
-class HomePage extends Component {
-    render() {
-      return (
-          <div>
-            <p>Welcome to the home of ham and eggs</p>
-            <Link to="/setup">Start a new meeting</Link>
-          </div>
-      );
-    }
-  }
+function HomePage(props) {
+	return (
+		<div>
+			<p>Commodo Lorem dolore sint sint esse magna.</p>
+			<button onClick={props.getStarted}>Get started</button>
+		</div>
+	);
+}
 
-  export default HomePage;
+export default HomePage;
