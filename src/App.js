@@ -60,7 +60,7 @@ class App extends Component {
                 submitAction={this.submitAction}>
                 </SetupPage>;
         } else if (this.state.currentView === 'time') {
-            view = <TimerPage numberOfPigs={this.formVariables.numberOfChickens}
+            view = <TimerPage numberOfPigs={this.formVariables.numberOfPigs}
                 numberOfChickens={this.formVariables.numberOfChickens}
                 random={this.formVariables.random}>
                 </TimerPage>;
