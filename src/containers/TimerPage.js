@@ -4,7 +4,7 @@ import ParticipantDisplay from '../components/ParticipantDisplay';
 
 // Recommended meeting length
 // const minsPerMeeting = 15;
-const minsPerMeeting = 5;
+const minsPerMeeting = 2;
 const pigsPrecedence = 2;
 const chickenPrecedence = 1;
 
@@ -31,6 +31,8 @@ const shuffle = function(array) {
 class TimerPage extends Component {
     constructor(props) {
         super(props);
+
+        this.countdown = React.createRef();
 
         this.state = {
             numberOfPigs: (this.props.numberOfPigs) ? this.props.numberOfPigs : 6,
@@ -64,24 +66,35 @@ class TimerPage extends Component {
     }
 
     processNextParticipant() {
+        console.log(this.state.pigs);
+        console.log(this.state.chickens);
         // Do we have any pigs left?
-        if (this.state.pigs.length > 0) {
+        if (this.state.pigs.length > 1) {
             this.state.pigs.shift();
             this.setState(prevState => ({
                 participantId: this.state.pigs[0],
                 participantType: 'pig',
                 currentCountdown: this.state.timePerParticipant * pigsPrecedence
             }))
+
+            this.countdown.current.countdownTimeout(
+                this.state.currentCountdown,
+                this.processNextParticipant
+            );
             // this.state.participantId = this.state.pigs[0];
             // this.state.participantType = 'pig';
             // this.state.currentCountdown =  this.state.timePerParticipant * pigsPrecedence;
-        } else if (this.state.chickens.length > 0) {
+        } else if (this.state.chickens.length > 1) {
             this.state.chickens.shift();
             this.setState(prevState => ({
                 participantId: this.state.chickens[0],
                 participantType: 'chicken',
                 currentCountdown: this.state.timePerParticipant * chickenPrecedence
             }))
+            this.countdown.current.countdownTimeout(
+                this.state.currentCountdown,
+                this.processNextParticipant
+            );
             // this.state.participantId = this.state.chickens[0];
             // this.state.participantType = 'chicken';
             // this.state.currentCountdown =  this.state.timePerParticipant * chickenPrecedence;
@@ -98,7 +111,7 @@ class TimerPage extends Component {
     render() {
         return <div>
             <p>Beginning meeting!</p>
-            <Countdown seconds={this.state.currentCountdown} timeoutCallback={this.processTimeout}></Countdown>
+            <Countdown ref={this.countdown} seconds={this.state.currentCountdown} timeoutCallback={this.processTimeout}></Countdown>
             <ParticipantDisplay participantId={this.state.participantId} participantType={this.state.participantType}></ParticipantDisplay>
         </div>;
     }
