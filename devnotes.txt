@@ -1,42 +1,9 @@
 Todo
 
-15 * 60 = 900 seconds available
-
-Precedence
-pigs * 2
-chickens * 1
-
-10 pigs
-2 chickens
-
-10 * 2 = 20
-2 * 1 = 2
-
-Total 22
-
-900 / 22 = 40.9 seconds
-baseSeconds = 40.9
-
-
-Random?
-Randomise the pigs 1 - 10
-
-Foreach pig
-    baseSeconds * 2
-    Countdown from here
-    Provide skip button
-    Any left over time gets added to bonusTime
-
-Foreach chickens
-    baseSeconds * 1
-    Countdown from here
-    Provide skip button
-    Any left over time gets added to bonusTime
-
-If any bonusTime countdown from there.
-
-
-
+* Add skip button
+* Handle complete meeting
+* Fix timeout violation error
+* Add image of pigs/chickens
 
 
 
