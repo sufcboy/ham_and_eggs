@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import Countdown from '../components/Countdown';
 import ParticipantDisplay from '../components/ParticipantDisplay';
+import SkipButton from '../components/SkipButton';
 
 // Recommended meeting length
 // const minsPerMeeting = 15;
@@ -28,6 +29,11 @@ const shuffle = function(array) {
     return array;
 }
 
+const getSkipLabel = function(pigs, chickens) {
+    return ((pigs.length + chickens.length) === 1) ?
+    'Finish meeting' : 'Skip';
+}
+
 class TimerPage extends Component {
     constructor(props) {
         super(props);
@@ -37,7 +43,7 @@ class TimerPage extends Component {
         this.state = {
             numberOfPigs: (this.props.numberOfPigs) ? this.props.numberOfPigs : 6,
             numberOfChickens: (this.props.numberOfChickens) ? this.props.numberOfChickens : 0,
-            random: (this.props.random) ? this.props.random : true,
+            random: (this.props.hasOwnProperty('random')) ? this.props.random : true,
         }
 
         this.state.timePerParticipant = getSecondsPerParticipant(this.state.numberOfPigs, this.state.numberOfChickens);
@@ -62,19 +68,22 @@ class TimerPage extends Component {
         this.state.participantId = this.state.pigs[0];
         this.state.participantType = 'pig';
         this.state.currentCountdown = this.state.timePerParticipant * pigsPrecedence;
+        this.state.skipLabel = getSkipLabel(this.state.pigs, this.state.chickens);
         // this.processNextParticipant();
     }
 
     processNextParticipant() {
         console.log(this.state.pigs);
         console.log(this.state.chickens);
+
         // Do we have any pigs left?
         if (this.state.pigs.length > 1) {
             this.state.pigs.shift();
             this.setState(prevState => ({
                 participantId: this.state.pigs[0],
                 participantType: 'pig',
-                currentCountdown: this.state.timePerParticipant * pigsPrecedence
+                currentCountdown: this.state.timePerParticipant * pigsPrecedence,
+                skipLabel: getSkipLabel(this.state.pigs, this.state.chickens)
             }))
 
             this.countdown.current.countdownTimeout(
@@ -89,7 +98,8 @@ class TimerPage extends Component {
             this.setState(prevState => ({
                 participantId: this.state.chickens[0],
                 participantType: 'chicken',
-                currentCountdown: this.state.timePerParticipant * chickenPrecedence
+                currentCountdown: this.state.timePerParticipant * chickenPrecedence,
+                skipLabel: getSkipLabel(this.state.pigs, this.state.chickens)
             }))
             this.countdown.current.countdownTimeout(
                 this.state.currentCountdown,
@@ -99,20 +109,30 @@ class TimerPage extends Component {
             // this.state.participantType = 'chicken';
             // this.state.currentCountdown =  this.state.timePerParticipant * chickenPrecedence;
         } else {
-            alert('Timesup!');
+            // alert('Timesup!');
+            // console.log('Timesup!');
+            this.processFinish();
         }
 
 
     }
     processTimeout() {
-        console.log('CALLED!');
+        console.log('Timeout!');
         this.processNextParticipant();
+    }
+    processSkip() {
+        console.log('Skip!');
+        this.processNextParticipant();
+    }
+    processFinish() {
+        console.log('Meeting finished!');
     }
     render() {
         return <div>
             <p>Beginning meeting!</p>
             <Countdown ref={this.countdown} seconds={this.state.currentCountdown} timeoutCallback={this.processTimeout}></Countdown>
             <ParticipantDisplay participantId={this.state.participantId} participantType={this.state.participantType}></ParticipantDisplay>
+            <SkipButton processSkip={this.processTimeout} skipLabel={this.state.skipLabel}></SkipButton>
         </div>;
     }
 }

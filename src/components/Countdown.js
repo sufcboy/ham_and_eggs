@@ -16,19 +16,28 @@ class Countdown extends Component {
     constructor(props) {
         super(props);
         let currentSeconds = parseInt(props.seconds, 10);
-        console.log(currentSeconds);
+
+        // Define to allow us to clear if skipped
+        this.timeout = null;
+
+        this.countdownTimeout.bind(this);
         this.countdownTimeout(currentSeconds, props.timeoutCallback)
     }
     countdownTimeout(currentSeconds, callback) {
-        let timeout = setInterval(function() {
+        // Allow us to clear timeout with skip button
+        if (null !== this.timeout) {
+            clearInterval(this.timeout);
+        }
+
+        this.timeout = setInterval(function() {
             currentSeconds--;
             document.getElementById('seconds').innerHTML = currentSeconds;
 
             if (currentSeconds === 0) {
-                clearInterval(timeout);
+                clearInterval(this.timeout);
                 callback();
             }
-        }, 1000);
+        }.bind(this), 1000);
     }
     render() {
         return <div>

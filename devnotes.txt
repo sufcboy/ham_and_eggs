@@ -1,11 +1,17 @@
 Todo
 
-* Add skip button
 * Handle complete meeting
+    - Decide what should happen
 * Fix timeout violation error
 * Add image of pigs/chickens
+* Look at jest for testing
+* Add propTypes and check timer props force random to be passed
 
+Bugs
+* Timer is 20 first round and 19 for everything after
 
+Ideas
+* Keep track of the time and display at the end so 'Meeting completed in 300 seconds'
 
 
 
