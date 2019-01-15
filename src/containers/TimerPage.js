@@ -90,9 +90,6 @@ class TimerPage extends Component {
                 this.state.currentCountdown,
                 this.processNextParticipant
             );
-            // this.state.participantId = this.state.pigs[0];
-            // this.state.participantType = 'pig';
-            // this.state.currentCountdown =  this.state.timePerParticipant * pigsPrecedence;
         } else if (this.state.chickens.length > 1) {
             this.state.chickens.shift();
             this.setState(prevState => ({
@@ -105,16 +102,9 @@ class TimerPage extends Component {
                 this.state.currentCountdown,
                 this.processNextParticipant
             );
-            // this.state.participantId = this.state.chickens[0];
-            // this.state.participantType = 'chicken';
-            // this.state.currentCountdown =  this.state.timePerParticipant * chickenPrecedence;
         } else {
-            // alert('Timesup!');
-            // console.log('Timesup!');
             this.processFinish();
         }
-
-
     }
     processTimeout() {
         console.log('Timeout!');
@@ -129,7 +119,6 @@ class TimerPage extends Component {
     }
     render() {
         return <div>
-            <p>Beginning meeting!</p>
             <Countdown ref={this.countdown} seconds={this.state.currentCountdown} timeoutCallback={this.processTimeout}></Countdown>
             <ParticipantDisplay participantId={this.state.participantId} participantType={this.state.participantType}></ParticipantDisplay>
             <SkipButton processSkip={this.processTimeout} skipLabel={this.state.skipLabel}></SkipButton>

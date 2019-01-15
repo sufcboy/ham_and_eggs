@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import './bootstrap.min.css';
 import HomePage from './containers/HomePage';
 import SetupPage from './containers/SetupPage';
 import TimerPage from './containers/TimerPage';
@@ -70,9 +71,6 @@ class App extends Component {
 
         return (
             <div className="App">
-                <header className="App-header">
-                    <h1>Welcome to Ham and Eggs</h1>
-                </header>
                 {view}
             </div>
         );

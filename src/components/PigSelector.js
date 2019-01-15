@@ -10,10 +10,9 @@ class PigSelector extends Component {
     }
     render() {
       return (
-          <div>
-            <p>Select number of pigs</p>
-            <select id="numberOfPigs" onChange={this.onSelect}>
-                <option value="-1">Select number of pigs</option>
+        <div class="form-group">
+            <label for="numberOfPigs">Select number of pigs</label>
+            <select class="form-control" id="numberOfPigs" onChange={this.onSelect}>
                 <option value="10">10</option>
                 <option value="9">9</option>
                 <option value="8">8</option>
@@ -25,7 +24,7 @@ class PigSelector extends Component {
                 <option value="2">2</option>
                 <option value="1">1</option>
             </select>
-          </div>
+        </div>
       );
     }
 }

@@ -4,7 +4,7 @@ function SkipButton(props) {
     console.log(props);
 	return (
 		<div>
-			<button onClick={props.processSkip}>{props.skipLabel}</button>
+			<button onClick={props.processSkip} class="btn btn-primary">{props.skipLabel}</button>
 		</div>
 	);
 }

@@ -2,17 +2,21 @@ Todo
 
 * Handle complete meeting
     - Decide what should happen
-* Fix timeout violation error
+        * For initial phase just go back to the beggining
 * Add image of pigs/chickens
 * Look at jest for testing
 * Add propTypes and check timer props force random to be passed
 
 Bugs
-* Timer is 20 first round and 19 for everything after
+
 
 Ideas
 * Keep track of the time and display at the end so 'Meeting completed in 300 seconds'
+* Timer style - https://codepen.io/kindofone/pen/DkhAz
 
+
+Sources
+https://getbootstrap.com/docs/4.0/examples/blog/
 
 
 

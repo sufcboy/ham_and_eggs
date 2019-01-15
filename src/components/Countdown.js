@@ -1,17 +1,5 @@
 import React, { Component } from 'react';
 
-// const countdownTimeout = function(currentSeconds, callback) {
-//     let timeout = setInterval(function() {
-//         currentSeconds--;
-//         document.getElementById('seconds').innerHTML = currentSeconds;
-
-//         if (currentSeconds === 0) {
-//             clearInterval(timeout);
-//             callback();
-//         }
-//     }, 1000);
-// }
-
 class Countdown extends Component {
     constructor(props) {
         super(props);
@@ -29,8 +17,16 @@ class Countdown extends Component {
             clearInterval(this.timeout);
         }
 
+        // Flag to avoid decrement on first call
+        let roundOne = true;
+
         this.timeout = setInterval(function() {
-            currentSeconds--;
+            if (roundOne === true) {
+                roundOne = false
+            } else {
+                currentSeconds--;
+            }
+
             document.getElementById('seconds').innerHTML = currentSeconds;
 
             if (currentSeconds === 0) {
@@ -40,9 +36,13 @@ class Countdown extends Component {
         }.bind(this), 1000);
     }
     render() {
-        return <div>
-            <p id="seconds">{this.props.seconds}</p>
-        </div>;
+        return (
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="lead" id="seconds"></div>
+                </div>
+            </div>
+        );
     }
 }
 
