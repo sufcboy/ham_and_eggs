@@ -10,9 +10,9 @@ class ChickenSelector extends Component {
     }
     render() {
       return (
-        <div class="form-group">
-            <label for="numberOfChicken">Select number of chickens</label>
-            <select class="form-control" id="numberOfChicken" onChange={this.onSelect}>
+        <div className="form-group">
+            <label htmlFor="numberOfChicken">Select number of chickens</label>
+            <select className="form-control" id="numberOfChicken" onChange={this.onSelect}>
                 <option value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>

@@ -22,6 +22,7 @@ class App extends Component {
         this.pigSelect = this.pigSelect.bind(this);
         this.chickenSelect = this.chickenSelect.bind(this);
         this.randomSelect = this.randomSelect.bind(this);
+        this.finishMeeting = this.finishMeeting.bind(this);
     };
 
     pigSelect(number) {
@@ -44,6 +45,18 @@ class App extends Component {
         }))
     };
 
+    finishMeeting() {
+        this.formVariables = {
+            numberOfPigs: 6,
+            numberOfChickens: 0,
+            random: false
+        };
+
+        this.setState(prevState => ({
+            currentView: 'home'
+        }))
+    }
+
     submitAction() {
         console.log(this.formVariables);
         this.setState(prevState => ({
@@ -63,7 +76,8 @@ class App extends Component {
         } else if (this.state.currentView === 'time') {
             view = <TimerPage numberOfPigs={this.formVariables.numberOfPigs}
                 numberOfChickens={this.formVariables.numberOfChickens}
-                random={this.formVariables.random}>
+                random={this.formVariables.random}
+                finishCallback={this.finishMeeting}>
                 </TimerPage>;
         } else {
             view = <HomePage getStarted={this.startUp}></HomePage>;

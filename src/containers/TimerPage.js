@@ -30,7 +30,9 @@ const shuffle = function(array) {
 }
 
 const getSkipLabel = function(pigs, chickens) {
-    return ((pigs.length + chickens.length) === 1) ?
+    // No chickens and last pig or the number of pigs and chickens is 1 each
+    return ((chickens.length === 0 && pigs.length === 1) ||
+    (pigs.length === 1 && chickens.length === 1)) ?
     'Finish meeting' : 'Skip';
 }
 
@@ -70,6 +72,7 @@ class TimerPage extends Component {
         this.state.currentCountdown = this.state.timePerParticipant * pigsPrecedence;
         this.state.skipLabel = getSkipLabel(this.state.pigs, this.state.chickens);
         // this.processNextParticipant();
+        this.finishMeeting = props.finishCallback;
     }
 
     processNextParticipant() {
@@ -91,7 +94,11 @@ class TimerPage extends Component {
                 this.processNextParticipant
             );
         } else if (this.state.chickens.length > 1) {
-            this.state.chickens.shift();
+            // Only shift the chickens if last participant was chicken
+            if (this.state.participantType === 'chicken') {
+                this.state.chickens.shift();
+            }
+
             this.setState(prevState => ({
                 participantId: this.state.chickens[0],
                 participantType: 'chicken',
@@ -103,6 +110,7 @@ class TimerPage extends Component {
                 this.processNextParticipant
             );
         } else {
+            this.countdown.current.clearTimeoutInterval();
             this.processFinish();
         }
     }
@@ -116,6 +124,7 @@ class TimerPage extends Component {
     }
     processFinish() {
         console.log('Meeting finished!');
+        this.finishMeeting();
     }
     render() {
         return <div>

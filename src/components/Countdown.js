@@ -9,7 +9,11 @@ class Countdown extends Component {
         this.timeout = null;
 
         this.countdownTimeout.bind(this);
+        this.clearTimeoutInterval.bind(this);
         this.countdownTimeout(currentSeconds, props.timeoutCallback)
+    }
+    clearTimeoutInterval() {
+        clearInterval(this.timeout);
     }
     countdownTimeout(currentSeconds, callback) {
         // Allow us to clear timeout with skip button
@@ -37,9 +41,9 @@ class Countdown extends Component {
     }
     render() {
         return (
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    <div class="lead" id="seconds"></div>
+            <div className="panel panel-default">
+                <div className="panel-body">
+                    <div className="lead" id="seconds"></div>
                 </div>
             </div>
         );

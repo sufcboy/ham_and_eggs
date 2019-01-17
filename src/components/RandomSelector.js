@@ -10,9 +10,9 @@ class RandomSelector extends Component {
     }
     render() {
       return (
-        <div class="form-group form-check">
-            <input type="checkbox" class="form-check-input" id="random" name="random" onChange={this.onChange}></input>
-            <label class="form-check-label" htmlFor="random">Randomise participant</label>
+        <div className="form-group form-check">
+            <input type="checkbox" className="form-check-input" id="random" name="random" onChange={this.onChange}></input>
+            <label className="form-check-label" htmlFor="random">Randomise participant</label>
         </div>
       );
     }

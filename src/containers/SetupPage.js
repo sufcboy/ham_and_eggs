@@ -9,7 +9,7 @@ function SetupPage(props) {
             <PigSelector onSelect={(el, val) => {props.pigSelect(val);}}></PigSelector>
             <ChickenSelector onSelect={(el, val) => {props.chickenSelect(val);}}></ChickenSelector>
             <RandomSelector onSelect={(el, val) => {props.randomSelect(val);}}></RandomSelector>
-            <button onClick={props.submitAction} class="btn btn-primary">Start meeting</button>
+            <button onClick={props.submitAction} className="btn btn-primary">Start meeting</button>
         </div>
     );
 }
