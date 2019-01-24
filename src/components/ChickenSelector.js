@@ -10,16 +10,24 @@ class ChickenSelector extends Component {
     }
     render() {
       return (
-        <div className="form-group">
+        <div className="form-group text-left">
             <label htmlFor="numberOfChicken">Select number of chickens</label>
-            <select className="form-control" id="numberOfChicken" onChange={this.onSelect}>
-                <option value="0">0</option>
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="4">4</option>
-                <option value="5">5</option>
-            </select>
+            <div className="row">
+                <div className="col-6">
+                    <p>INSERT IMAGE OF Chicken HERE</p>
+                </div>
+                <div className="col-6">
+                    <select className="form-control" id="numberOfChicken" onChange={this.onSelect}>
+                        <option value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                    </select>
+                </div>
+            </div>
+
         </div>
       );
     }

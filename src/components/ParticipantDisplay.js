@@ -3,7 +3,22 @@ import React, { Component } from 'react';
 class ParticipantDisplay extends Component {
     render() {
         return <div>
-            <p id="display">{this.props.participantId} - {this.props.participantType}</p>
+            <div className="container">
+                <div className="row">
+                    <div className="col-md-3">
+                        <div className="card mb-3 shadow-sm">
+                            <svg className="bd-placeholder-img card-img-top" width="100%" height="100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
+                            <title>Placeholder</title>
+                            <rect fill="#55595c" width="100%" height="100%"/>
+                                <text fill="#eceeef" x="50%" y="50%">Thumbnail</text>
+                            </svg>
+                            <div className="card-body">
+                                <p className="card-text">{this.props.participantType} {this.props.participantId}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>;
     }
 }

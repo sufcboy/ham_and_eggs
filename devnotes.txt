@@ -5,15 +5,33 @@ Todo
 * Add propTypes and check timer props force random to be passed
 
 Bugs
+* Timer style - https://codepen.io/kindofone/pen/DkhAz
 * Meeting with 2 chicks, do another meeting with 0 chicks. Thinks 2 chicks for meeting
+* Select 10 pigs and it stops at 6?
 
 Ideas
 * Keep track of the time and display at the end so 'Meeting completed in 300 seconds'
-* Timer style - https://codepen.io/kindofone/pen/DkhAz
+* Allow edit of length of meeting?
+* End of meeting show time remaining and count down
 
+Testing
+* Device types
 
 Sources
 https://getbootstrap.com/docs/4.0/examples/blog/
 
+<div id="root"></div>
 
+About
+LA Pig and a Chicken are walking down the road.
+
+The Chicken says: "Hey Pig, I was thinking we should open a restaurant!"
+
+Pig replies: "Hm, maybe, what would we call it?"
+
+The Chicken responds: "How about 'ham-n-eggs'?"
+
+The Pig thinks for a moment and says: "No thanks. I'd be committed, but you'd only be involved."
+
+ wikipedia
 
