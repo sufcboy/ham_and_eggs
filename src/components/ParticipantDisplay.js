@@ -5,7 +5,7 @@ class ParticipantDisplay extends Component {
         return <div>
             <div className="container">
                 <div className="row">
-                    <div className="col-md-3">
+                    <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 offset-2 col-8">
                         <div className="card mb-3 shadow-sm">
                             <svg className="bd-placeholder-img card-img-top" width="100%" height="100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
                             <title>Placeholder</title>

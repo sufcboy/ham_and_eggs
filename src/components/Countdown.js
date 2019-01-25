@@ -30,8 +30,12 @@ class Countdown extends Component {
             } else {
                 currentSeconds--;
             }
+console.log(currentSeconds);
+            let mins = Math.floor(currentSeconds / 60);
+console.log(mins);
 
-            document.getElementById('seconds').innerHTML = currentSeconds;
+            document.getElementById('minutes').innerHTML = mins;
+            document.getElementById('seconds').innerHTML = (currentSeconds - (mins * 60));
 
             if (currentSeconds === 0) {
                 clearInterval(this.timeout);
@@ -41,9 +45,29 @@ class Countdown extends Component {
     }
     render() {
         return (
-            <div className="panel panel-default">
-                <div className="panel-body">
-                    <div className="lead" id="seconds"></div>
+            <div className="container">
+                <div className="row">
+                    <div className="offset-md-3 offset-sm-1 col-md-3 col-sm-5 col-6">
+                        <div className="card mb-2 shadow-sm">
+                            <div className="border m-sm p-sm">
+                                <p id="minutes" className="h2"></p>
+                            </div>
+                            <div className="card-body bg-light">
+                                <p className="card-text">Mins</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="col-md-3 col-sm-5 col-6">
+                        <div className="card mb-2 shadow-sm">
+                            <div className="border m-sm p-sm">
+                                <p id="seconds" className="h2"></p>
+                            </div>
+                            <div className="card-body bg-light">
+                                <p className="card-text">Seconds</p>
+                            </div>
+                        </div>
+
+                    </div>
                 </div>
             </div>
         );

@@ -58,7 +58,7 @@ class App extends Component {
     }
 
     submitAction() {
-        console.log(this.formVariables);
+        // console.log(this.formVariables);
         this.setState(prevState => ({
             currentView: 'time'
         }))

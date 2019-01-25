@@ -4,8 +4,8 @@ import ParticipantDisplay from '../components/ParticipantDisplay';
 import SkipButton from '../components/SkipButton';
 
 // Recommended meeting length
-// const minsPerMeeting = 15;
-const minsPerMeeting = 2;
+const minsPerMeeting = 15;
+// const minsPerMeeting = 2;
 const pigsPrecedence = 2;
 const chickenPrecedence = 1;
 

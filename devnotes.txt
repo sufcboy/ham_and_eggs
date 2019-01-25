@@ -1,8 +1,10 @@
 Todo
 
-* Add image of pigs/chickens
-* Look at jest for testing
+
 * Add propTypes and check timer props force random to be passed
+* Styling
+    * Add image of pigs/chickens
+* Look at jest for testing
 
 Bugs
 * Timer style - https://codepen.io/kindofone/pen/DkhAz
