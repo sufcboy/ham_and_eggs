@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class Countdown extends Component {
     constructor(props) {
@@ -73,5 +74,10 @@ console.log(mins);
         );
     }
 }
+
+Countdown.propTypes = {
+    seconds: PropTypes.number.isRequired,
+    timeoutCallback: PropTypes.func.isRequired
+};
 
 export default Countdown;

@@ -27,12 +27,12 @@ class App extends Component {
 
     pigSelect(number) {
         if (number !== -1) {
-            this.formVariables.numberOfPigs = number;
+            this.formVariables.numberOfPigs = parseInt(number, 10);
         }
     }
 
     chickenSelect(number) {
-        this.formVariables.numberOfChickens = number;
+        this.formVariables.numberOfChickens = parseInt(number, 10);
     }
 
     randomSelect(value) {

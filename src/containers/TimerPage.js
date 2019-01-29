@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Countdown from '../components/Countdown';
 import ParticipantDisplay from '../components/ParticipantDisplay';
 import SkipButton from '../components/SkipButton';
+import PropTypes from 'prop-types';
 
 // Recommended meeting length
 const minsPerMeeting = 15;
@@ -43,9 +44,9 @@ class TimerPage extends Component {
         this.countdown = React.createRef();
 
         this.state = {
-            numberOfPigs: (this.props.numberOfPigs) ? this.props.numberOfPigs : 6,
-            numberOfChickens: (this.props.numberOfChickens) ? this.props.numberOfChickens : 0,
-            random: (this.props.hasOwnProperty('random')) ? this.props.random : true,
+            numberOfPigs: this.props.numberOfPigs,
+            numberOfChickens: this.props.numberOfChickens,
+            random: this.props.random
         }
 
         this.state.timePerParticipant = getSecondsPerParticipant(this.state.numberOfPigs, this.state.numberOfChickens);
@@ -134,5 +135,18 @@ class TimerPage extends Component {
         </div>;
     }
 }
+
+TimerPage.defaultProps = {
+    numberOfPigs: 6,
+    numberOfChickens: 0,
+    random: true
+};
+
+TimerPage.propTypes = {
+    numberOfPigs: PropTypes.number,
+    numberOfChickens: PropTypes.number,
+    random: PropTypes.bool,
+    finishCallback: PropTypes.func.isRequired
+};
 
 export default TimerPage;

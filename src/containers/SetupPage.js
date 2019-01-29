@@ -2,6 +2,7 @@ import React from 'react';
 import PigSelector from '../components/PigSelector';
 import ChickenSelector from '../components/ChickenSelector';
 import RandomSelector from '../components/RandomSelector';
+import PropTypes from 'prop-types';
 
 function SetupPage(props) {
     return (
@@ -17,5 +18,12 @@ function SetupPage(props) {
         </div>
     );
 }
+
+SetupPage.propTypes = {
+    pigSelect: PropTypes.func.isRequired,
+    chickenSelect: PropTypes.func.isRequired,
+    randomSelect: PropTypes.func.isRequired,
+    submitAction: PropTypes.func.isRequired
+};
 
 export default SetupPage;

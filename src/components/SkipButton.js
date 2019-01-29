@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function SkipButton(props) {
     console.log(props);
@@ -8,5 +9,10 @@ function SkipButton(props) {
 		</div>
 	);
 }
+
+SkipButton.propTypes = {
+	processSkip: PropTypes.func.isRequired,
+	skipLabel: PropTypes.string.isRequired
+};
 
 export default SkipButton;

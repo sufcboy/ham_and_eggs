@@ -1,6 +1,5 @@
 Todo
 
-
 * Add propTypes and check timer props force random to be passed
 * Styling
     * Add image of pigs/chickens

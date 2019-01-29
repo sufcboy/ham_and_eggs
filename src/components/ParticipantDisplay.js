@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ParticipantDisplay extends Component {
     render() {
@@ -22,5 +23,10 @@ class ParticipantDisplay extends Component {
         </div>;
     }
 }
+
+ParticipantDisplay.propTypes = {
+    participantType: PropTypes.oneOf(['pig', 'chicken']),
+    participantId: PropTypes.number.isRequired
+};
 
 export default ParticipantDisplay;

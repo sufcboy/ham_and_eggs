@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class RandomSelector extends Component {
     constructor(props) {
@@ -17,5 +18,9 @@ class RandomSelector extends Component {
       );
     }
 }
+
+RandomSelector.propTypes = {
+    onSelect: PropTypes.func.isRequired
+};
 
 export default RandomSelector;

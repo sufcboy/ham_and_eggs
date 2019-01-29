@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class PigSelector extends Component {
     constructor(props) {
@@ -35,5 +36,9 @@ class PigSelector extends Component {
       );
     }
 }
+
+PigSelector.propTypes = {
+    onSelect: PropTypes.func.isRequired
+};
 
 export default PigSelector;

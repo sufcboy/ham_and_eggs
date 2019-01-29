@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 class ChickenSelector extends Component {
     constructor(props) {
@@ -32,5 +33,9 @@ class ChickenSelector extends Component {
       );
     }
 }
+
+ChickenSelector.propTypes = {
+    onSelect: PropTypes.func.isRequired
+};
 
 export default ChickenSelector;

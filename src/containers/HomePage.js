@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 function HomePage(props) {
 	return (
@@ -8,5 +9,9 @@ function HomePage(props) {
 		</div>
 	);
 }
+
+HomePage.propTypes = {
+	getStarted: PropTypes.func.isRequired
+};
 
 export default HomePage;
