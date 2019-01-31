@@ -1,14 +1,13 @@
-Todo
+Current
+* Meeting with 2 chicks, do another meeting with 0 chicks. Thinks 2 chicks for meeting
 
-* Add propTypes and check timer props force random to be passed
+Todo
 * Styling
     * Add image of pigs/chickens
 * Look at jest for testing
 
 Bugs
 * Timer style - https://codepen.io/kindofone/pen/DkhAz
-* Meeting with 2 chicks, do another meeting with 0 chicks. Thinks 2 chicks for meeting
-* Select 10 pigs and it stops at 6?
 
 Ideas
 * Keep track of the time and display at the end so 'Meeting completed in 300 seconds'

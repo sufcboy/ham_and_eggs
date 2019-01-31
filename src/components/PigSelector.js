@@ -18,7 +18,7 @@ class PigSelector extends Component {
                     <p>INSERT IMAGE OF PIG HERE</p>
                 </div>
                 <div className="col-6">
-                    <select className="form-control" id="numberOfPigs" onChange={this.onSelect}>
+                    <select className="form-control" id="numberOfPigs" onChange={this.onSelect} defaultValue={this.props.initialNumberOfPigs}>
                         <option value="10">10</option>
                         <option value="9">9</option>
                         <option value="8">8</option>

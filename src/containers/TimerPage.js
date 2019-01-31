@@ -39,8 +39,9 @@ const getSkipLabel = function(pigs, chickens) {
 
 class TimerPage extends Component {
     constructor(props) {
+        console.log(props);
         super(props);
-
+console.log(props);
         this.countdown = React.createRef();
 
         this.state = {

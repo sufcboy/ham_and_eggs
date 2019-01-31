@@ -31,9 +31,8 @@ class Countdown extends Component {
             } else {
                 currentSeconds--;
             }
-console.log(currentSeconds);
+
             let mins = Math.floor(currentSeconds / 60);
-console.log(mins);
 
             document.getElementById('minutes').innerHTML = mins;
             document.getElementById('seconds').innerHTML = (currentSeconds - (mins * 60));
