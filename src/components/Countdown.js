@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+const numberPad = function(number) {
+    return (number < 10) ? '0' + number.toString() : number.toString();
+}
 class Countdown extends Component {
     constructor(props) {
         super(props);
@@ -34,8 +37,8 @@ class Countdown extends Component {
 
             let mins = Math.floor(currentSeconds / 60);
 
-            document.getElementById('minutes').innerHTML = mins;
-            document.getElementById('seconds').innerHTML = (currentSeconds - (mins * 60));
+            document.getElementById('minutes').innerHTML = numberPad(mins);
+            document.getElementById('seconds').innerHTML = numberPad((currentSeconds - (mins * 60)));
 
             if (currentSeconds === 0) {
                 clearInterval(this.timeout);

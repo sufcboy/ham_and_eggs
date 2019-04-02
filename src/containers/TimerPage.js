@@ -39,9 +39,7 @@ const getSkipLabel = function(pigs, chickens) {
 
 class TimerPage extends Component {
     constructor(props) {
-        console.log(props);
         super(props);
-console.log(props);
         this.countdown = React.createRef();
 
         this.state = {
@@ -70,7 +68,7 @@ console.log(props);
         this.processTimeout = this.processTimeout.bind(this);
         this.processNextParticipant = this.processNextParticipant.bind(this);
         this.state.participantId = this.state.pigs[0];
-        this.state.participantType = 'pig';
+        this.state.participantType = 'Pig';
         this.state.currentCountdown = this.state.timePerParticipant * pigsPrecedence;
         this.state.skipLabel = getSkipLabel(this.state.pigs, this.state.chickens);
         // this.processNextParticipant();
@@ -86,7 +84,7 @@ console.log(props);
             this.state.pigs.shift();
             this.setState(prevState => ({
                 participantId: this.state.pigs[0],
-                participantType: 'pig',
+                participantType: 'Pig',
                 currentCountdown: this.state.timePerParticipant * pigsPrecedence,
                 skipLabel: getSkipLabel(this.state.pigs, this.state.chickens)
             }))
@@ -97,13 +95,13 @@ console.log(props);
             );
         } else if (this.state.chickens.length > 1) {
             // Only shift the chickens if last participant was chicken
-            if (this.state.participantType === 'chicken') {
+            if (this.state.participantType === 'Chicken') {
                 this.state.chickens.shift();
             }
 
             this.setState(prevState => ({
                 participantId: this.state.chickens[0],
-                participantType: 'chicken',
+                participantType: 'Chicken',
                 currentCountdown: this.state.timePerParticipant * chickenPrecedence,
                 skipLabel: getSkipLabel(this.state.pigs, this.state.chickens)
             }))

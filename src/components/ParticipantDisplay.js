@@ -25,7 +25,7 @@ class ParticipantDisplay extends Component {
 }
 
 ParticipantDisplay.propTypes = {
-    participantType: PropTypes.oneOf(['pig', 'chicken']),
+    participantType: PropTypes.oneOf(['Pig', 'Chicken']),
     participantId: PropTypes.number.isRequired
 };
 

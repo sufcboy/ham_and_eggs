@@ -1,10 +1,15 @@
 Current
-
+* Format the current animal label
 
 Todo
+
+
+* Needs a new logo
 * Styling
     * Add image of pigs/chickens
+* Transition to new user is too subtle
 * Look at jest for testing
+* Add Redux
 
 Bugs
 * Timer style - https://codepen.io/kindofone/pen/DkhAz
