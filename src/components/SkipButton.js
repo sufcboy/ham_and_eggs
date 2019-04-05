@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 function SkipButton(props) {
-    console.log(props);
 	return (
 		<div>
 			<button onClick={props.processSkip} className="btn btn-primary">{props.skipLabel}</button>

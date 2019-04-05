@@ -4,20 +4,69 @@ import ParticipantDisplay from '../components/ParticipantDisplay';
 import SkipButton from '../components/SkipButton';
 import PropTypes from 'prop-types';
 
-// Recommended meeting length
-const minsPerMeeting = 15;
-// const minsPerMeeting = 2;
-const pigsPrecedence = 2;
-const chickenPrecedence = 1;
-
-const getSecondsPerParticipant = function(noOfPigs, noOfChickens) {
-    const secondsPerMeeting = minsPerMeeting * 60;
-    const totalWithPrecedence = (noOfPigs * pigsPrecedence) + (noOfChickens * chickenPrecedence);
-
-    return Math.floor(secondsPerMeeting / totalWithPrecedence);
+const fillAnimalsArray = (numberOfAnimal) => {
+  const animalArray = [];
+  for (let i = 1; i <= numberOfAnimal; i++) {
+    animalArray.push(i);
+  }
+  return animalArray;
 }
 
-const shuffle = function(array) {
+class TimerPage extends Component {
+  pigsPrecedence = 2
+  chickenPrecedence = 1
+  minsPerMeeting = 15
+  typePig = 'Pig'
+  typeChicken = 'Chicken'
+  constructor(props) {
+    super(props);
+    this.countdown = React.createRef();
+
+    // Initialise the state
+    this.state = {
+      numberOfPigs: this.props.numberOfPigs,
+      numberOfChickens: this.props.numberOfChickens,
+      random: this.props.random
+    }
+
+    // Time related states
+    this.state.timePerParticipant = this.getSecondsPerParticipant(
+      this.state.numberOfPigs,
+      this.state.numberOfChickens
+    );
+    this.state.currentCountdown = this.state.timePerParticipant * this.pigsPrecedence;
+
+    // Pigs and chickens
+    this.initialisePigsAndChickens();
+
+    // Bind instance to these methods
+    this.processTimeout = this.processTimeout.bind(this);
+    this.processNextParticipant = this.processNextParticipant.bind(this);
+
+    // Assign finish callback
+    this.finishMeeting = props.finishCallback;
+  }
+  initialisePigsAndChickens() {
+    this.state.pigs = fillAnimalsArray(this.state.numberOfPigs);
+    this.state.chickens = fillAnimalsArray(this.state.numberOfChickens);
+
+    if (this.state.random === true) {
+      this.state.pigs = this.shuffle(this.state.pigs);
+      this.state.chickens = this.shuffle(this.state.chickens);
+    }
+
+    // First participant
+    this.state.participantId = this.state.pigs[0];
+    this.state.participantType = this.typePig;
+    this.state.skipLabel = this.getSkipLabel(this.state.pigs, this.state.chickens);
+  }
+  getSecondsPerParticipant(noOfPigs, noOfChickens) {
+    const secondsPerMeeting = this.minsPerMeeting * 60;
+    const totalWithPrecedence = (noOfPigs * this.pigsPrecedence) + (noOfChickens * this.chickenPrecedence);
+
+    return Math.floor(secondsPerMeeting / totalWithPrecedence);
+  }
+  shuffle(array) {
     let tmp,current,top = array.length;
 
     if(top) while(--top) {
@@ -28,124 +77,83 @@ const shuffle = function(array) {
     }
 
     return array;
-}
-
-const getSkipLabel = function(pigs, chickens) {
+  }
+  getSkipLabel(pigs, chickens) {
+    const remainingParticipants = pigs.length + chickens.length;
     // No chickens and last pig or the number of pigs and chickens is 1 each
-    return ((chickens.length === 0 && pigs.length === 1) ||
-    (pigs.length === 1 && chickens.length === 1)) ?
-    'Finish meeting' : 'Skip';
-}
+    return (remainingParticipants === 1 ||
+        (pigs.length === 1 && chickens.length === 1)) ?
+      'Finish meeting' : 'Skip';
+  }
+  processNextParticipant() {
+    // Do we have any pigs left?
+    if (this.state.pigs.length > 1) {
+      this.state.pigs.shift();
+      this.setState(prevState => ({
+        participantId: this.state.pigs[0],
+        participantType: this.typePig,
+        currentCountdown: this.state.timePerParticipant * this.pigsPrecedence,
+        skipLabel: this.getSkipLabel(this.state.pigs, this.state.chickens)
+      }))
 
-class TimerPage extends Component {
-    constructor(props) {
-        super(props);
-        this.countdown = React.createRef();
+      this.countdown.current.countdownTimeout(
+        this.state.currentCountdown,
+        this.processNextParticipant
+      );
+    } else if (this.state.chickens.length > 1) {
+      // Only shift the chickens if last participant was chicken
+      if (this.state.participantType === this.typeChicken) {
+        this.state.chickens.shift();
+      }
 
-        this.state = {
-            numberOfPigs: this.props.numberOfPigs,
-            numberOfChickens: this.props.numberOfChickens,
-            random: this.props.random
-        }
-
-        this.state.timePerParticipant = getSecondsPerParticipant(this.state.numberOfPigs, this.state.numberOfChickens);
-        this.state.pigs = [];
-        this.state.chickens = [];
-
-        for (let i=1; i<=this.state.numberOfPigs;i++) {
-            this.state.pigs.push(i);
-        }
-
-        for (let j=1; j<=this.state.numberOfChickens;j++) {
-            this.state.chickens.push(j);
-        }
-
-        if (this.state.random === true) {
-            this.state.pigs = shuffle(this.state.pigs);
-            this.state.chickens = shuffle(this.state.chickens);
-        }
-
-        this.processTimeout = this.processTimeout.bind(this);
-        this.processNextParticipant = this.processNextParticipant.bind(this);
-        this.state.participantId = this.state.pigs[0];
-        this.state.participantType = 'Pig';
-        this.state.currentCountdown = this.state.timePerParticipant * pigsPrecedence;
-        this.state.skipLabel = getSkipLabel(this.state.pigs, this.state.chickens);
-        // this.processNextParticipant();
-        this.finishMeeting = props.finishCallback;
+      this.setState(prevState => ({
+        participantId: this.state.chickens[0],
+        participantType: this.typeChicken,
+        currentCountdown: this.state.timePerParticipant * this.chickenPrecedence,
+        skipLabel: this.getSkipLabel(this.state.pigs, this.state.chickens)
+      }))
+      this.countdown.current.countdownTimeout(
+        this.state.currentCountdown,
+        this.processNextParticipant
+      );
+    } else {
+      this.countdown.current.clearTimeoutInterval();
+      this.processFinish();
     }
-
-    processNextParticipant() {
-        console.log(this.state.pigs);
-        console.log(this.state.chickens);
-
-        // Do we have any pigs left?
-        if (this.state.pigs.length > 1) {
-            this.state.pigs.shift();
-            this.setState(prevState => ({
-                participantId: this.state.pigs[0],
-                participantType: 'Pig',
-                currentCountdown: this.state.timePerParticipant * pigsPrecedence,
-                skipLabel: getSkipLabel(this.state.pigs, this.state.chickens)
-            }))
-
-            this.countdown.current.countdownTimeout(
-                this.state.currentCountdown,
-                this.processNextParticipant
-            );
-        } else if (this.state.chickens.length > 1) {
-            // Only shift the chickens if last participant was chicken
-            if (this.state.participantType === 'Chicken') {
-                this.state.chickens.shift();
-            }
-
-            this.setState(prevState => ({
-                participantId: this.state.chickens[0],
-                participantType: 'Chicken',
-                currentCountdown: this.state.timePerParticipant * chickenPrecedence,
-                skipLabel: getSkipLabel(this.state.pigs, this.state.chickens)
-            }))
-            this.countdown.current.countdownTimeout(
-                this.state.currentCountdown,
-                this.processNextParticipant
-            );
-        } else {
-            this.countdown.current.clearTimeoutInterval();
-            this.processFinish();
-        }
-    }
-    processTimeout() {
-        console.log('Timeout!');
-        this.processNextParticipant();
-    }
-    processSkip() {
-        console.log('Skip!');
-        this.processNextParticipant();
-    }
-    processFinish() {
-        console.log('Meeting finished!');
-        this.finishMeeting();
-    }
-    render() {
-        return <div>
-            <Countdown ref={this.countdown} seconds={this.state.currentCountdown} timeoutCallback={this.processTimeout}></Countdown>
-            <ParticipantDisplay participantId={this.state.participantId} participantType={this.state.participantType}></ParticipantDisplay>
-            <SkipButton processSkip={this.processTimeout} skipLabel={this.state.skipLabel}></SkipButton>
-        </div>;
-    }
+  }
+  processTimeout() {
+    this.processNextParticipant();
+  }
+  processSkip() {
+    this.processNextParticipant();
+  }
+  processFinish() {
+    this.finishMeeting();
+  }
+  render() {
+    return <div>
+      <Countdown ref={this.countdown}
+        seconds={this.state.currentCountdown}
+        timeoutCallback={this.processTimeout}></Countdown>
+      <ParticipantDisplay participantId={this.state.participantId}
+        participantType={this.state.participantType}></ParticipantDisplay>
+      <SkipButton processSkip={this.processTimeout}
+        skipLabel={this.state.skipLabel}></SkipButton>
+    </div>;
+  }
 }
 
 TimerPage.defaultProps = {
-    numberOfPigs: 6,
-    numberOfChickens: 0,
-    random: true
+  numberOfPigs: 6,
+  numberOfChickens: 0,
+  random: true
 };
 
 TimerPage.propTypes = {
-    numberOfPigs: PropTypes.number,
-    numberOfChickens: PropTypes.number,
-    random: PropTypes.bool,
-    finishCallback: PropTypes.func.isRequired
+  numberOfPigs: PropTypes.number,
+  numberOfChickens: PropTypes.number,
+  random: PropTypes.bool,
+  finishCallback: PropTypes.func.isRequired
 };
 
 export default TimerPage;
