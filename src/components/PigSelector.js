@@ -15,7 +15,9 @@ class PigSelector extends Component {
             <label htmlFor="numberOfPigs">Select number of pigs</label>
             <div className="row">
                 <div className="col-6">
-                    <p>INSERT IMAGE OF PIG HERE</p>
+                    <p className="text-center">
+                    <img src="/assets/pig-small.png" alt="Pigs"/>
+                    </p>
                 </div>
                 <div className="col-6">
                     <select className="form-control" id="numberOfPigs" onChange={this.onSelect} defaultValue={this.props.initialNumberOfPigs}>
