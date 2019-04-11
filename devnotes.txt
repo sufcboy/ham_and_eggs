@@ -10,6 +10,7 @@ Todo
 * Transition to new user is too subtle
 * Look at jest for testing
 * Add Redux
+* Add code standards. See air bnb
 
 Bugs
 * Timer style - https://codepen.io/kindofone/pen/DkhAz

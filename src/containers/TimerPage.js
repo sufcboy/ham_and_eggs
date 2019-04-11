@@ -86,40 +86,32 @@ class TimerPage extends Component {
       'Finish meeting' : 'Skip';
   }
   processNextParticipant() {
-    // Do we have any pigs left?
-    if (this.state.pigs.length > 1) {
-      this.state.pigs.shift();
-      this.setState(prevState => ({
-        participantId: this.state.pigs[0],
-        participantType: this.typePig,
-        currentCountdown: this.state.timePerParticipant * this.pigsPrecedence,
-        skipLabel: this.getSkipLabel(this.state.pigs, this.state.chickens)
-      }))
-
-      this.countdown.current.countdownTimeout(
-        this.state.currentCountdown,
-        this.processNextParticipant
-      );
-    } else if (this.state.chickens.length > 1) {
-      // Only shift the chickens if last participant was chicken
-      if (this.state.participantType === this.typeChicken) {
-        this.state.chickens.shift();
-      }
-
-      this.setState(prevState => ({
-        participantId: this.state.chickens[0],
-        participantType: this.typeChicken,
-        currentCountdown: this.state.timePerParticipant * this.chickenPrecedence,
-        skipLabel: this.getSkipLabel(this.state.pigs, this.state.chickens)
-      }))
-      this.countdown.current.countdownTimeout(
-        this.state.currentCountdown,
-        this.processNextParticipant
-      );
-    } else {
+    // No more participants
+    if (this.state.pigs.length === 0 && this.state.chickens.length === 0) {
       this.countdown.current.clearTimeoutInterval();
       this.processFinish();
+      return;
     }
+
+    // Skip to the next participant
+    if (this.state.chickens.length > 1 && this.state.participantType === this.typeChicken) {
+      this.state.chickens.shift();
+    } else {
+      this.state.pigs.shift();
+    }
+
+    // Update state
+    this.setState(prevState => ({
+      participantId: (this.state.pigs.length > 1) ? this.state.pigs[0] : this.state.chickens[0],
+      participantType: (this.state.pigs.length > 1) ? this.typePig : this.typeChicken,
+      currentCountdown: this.state.timePerParticipant * ((this.state.pigs.length > 1) ? this.pigsPrecedence : this.chickenPrecedence),
+      skipLabel: this.getSkipLabel(this.state.pigs, this.state.chickens)
+    }))
+
+    this.countdown.current.countdownTimeout(
+      this.state.currentCountdown,
+      this.processNextParticipant
+    );
   }
   processTimeout() {
     this.processNextParticipant();

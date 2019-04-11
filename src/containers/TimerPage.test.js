@@ -106,57 +106,90 @@ it('should initialise the pigs and chickens correctly', () => {
   })
 })
 
-it('should move on to the next pig when called', () => {
-  const initialState = {
-    pigs: [1,2,3,4,5,6,7]
-  };
-  const expectedPigs = [2,3,4,5,6,7];
-  wrapper.setState(initialState);
-  wrapper.processNextParticipant();
-  let expected = wrapper.state;
+it('should process next participant correctly', () => {
+  const tests = [
+    // Pigs is moved on
+    {
+      state: {
+        chickens: [],
+        pigs: [1,2,3,4,5,6,7]
+      },
+      expected: {
+        chickens: [],
+        pigs: [2,3,4,5,6,7],
+        participantId: 2,
+        participantType: wrapper.typePig,
+        currentCountdown: wrapper.state.timePerParticipant*wrapper.pigsPrecedence
+      }
+    },
+    // Last pig moves onto chickens
+    {
+      state: {
+        participantId: 1,
+        participantType: wrapper.typePig,
+        pigs: [],
+        chickens: [1,2]
+      },
+      expected: {
+        chickens: [1,2],
+        pigs: [],
+        participantId: 1,
+        participantType: wrapper.typeChicken,
+        currentCountdown: wrapper.state.timePerParticipant*wrapper.chickenPrecedence
+      }
+    },
+    // Next chicken is processed
+    {
+      state: {
+        participantId: 2,
+        participantType: wrapper.typeChicken,
+        pigs: [],
+        chickens: [2,3]
+      },
+      expected: {
+        chickens: [3],
+        pigs: [],
+        participantId: 3,
+        participantType: wrapper.typeChicken,
+        currentCountdown: wrapper.state.timePerParticipant*wrapper.chickenPrecedence
+      }
+    },
+  ];
 
-  expect(expected.pigs).toEqual(expectedPigs);
-  expect(expected.participantId).toBe(expectedPigs[0]);
-  expect(expected.participantType).toBe(wrapper.typePig);
-  expect(expected.currentCountdown).toBe(expected.timePerParticipant * wrapper.pigsPrecedence);
+  tests.forEach((test) => {
+    wrapper.setState(test.state);
+
+    // Mock the countdown timeout
+    const mockTimeout = jest.fn();
+    wrapper.countdown.current.countdownTimeout = mockTimeout;
+
+    // Test method
+    wrapper.processNextParticipant();
+    let result = wrapper.state;
+
+    // Mocked method
+    expect(mockTimeout.mock.calls[0][0]).toBe(result.currentCountdown);
+    expect(mockTimeout.mock.calls[0][1]).toBe(wrapper.processNextParticipant);
+
+    // Check other expectations
+    expect(result.pigs).toEqual(test.expected.pigs);
+    expect(result.chickens).toEqual(test.expected.chickens);
+    expect(result.participantId).toBe(test.expected.participantId);
+    expect(result.participantType).toBe(test.expected.participantType);
+    expect(result.currentCountdown).toBe(test.expected.currentCountdown);
+  });
 })
 
-it('should move on to the next chicken but not shift it', () => {
-  const initialState = {
-    participantId: 1,
-    participantType: wrapper.typePig,
+it('should clear timeout and process final method', () => {
+  wrapper.setState({
     pigs: [],
-    chickens: [1,2]
-  };
-  const expectedChickens = [1,2];
-  wrapper.setState(initialState);
+    chickens: []
+  });
+  const mockTimeout = jest.fn();
+  wrapper.countdown.current.clearTimeoutInterval = mockTimeout;
+
+  // Test method
   wrapper.processNextParticipant();
-  let expected = wrapper.state;
 
-  expect(expected.chickens).toEqual(expectedChickens);
-  expect(expected.participantId).toBe(expectedChickens[0]);
-  expect(expected.participantType).toBe(wrapper.typeChicken);
-  expect(expected.currentCountdown).toBe(
-    expected.timePerParticipant * wrapper.chickenPrecedence
-  );
-})
-
-it('should move on to the next chicken and shift it', () => {
-  const initialState = {
-    participantId: 2,
-    participantType: wrapper.typeChicken,
-    pigs: [],
-    chickens: [2,3]
-  };
-  const expectedChickens = [3];
-  wrapper.setState(initialState);
-  wrapper.processNextParticipant();
-  let expected = wrapper.state;
-
-  expect(expected.chickens).toEqual(expectedChickens);
-  expect(expected.participantId).toBe(expectedChickens[0]);
-  expect(expected.participantType).toBe(wrapper.typeChicken);
-  expect(expected.currentCountdown).toBe(
-    expected.timePerParticipant * wrapper.chickenPrecedence
-  );
+  expect(mockTimeout.mock.calls.length).toBe(1);
 })
