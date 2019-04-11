@@ -15,7 +15,9 @@ class ChickenSelector extends Component {
             <label htmlFor="numberOfChicken">Select number of chickens</label>
             <div className="row">
                 <div className="col-6">
-                    <p>INSERT IMAGE OF Chicken HERE</p>
+                    <p className="text-center">
+                        <img src="/assets/chicken-small.png" alt="Chickens"/>
+                    </p>
                 </div>
                 <div className="col-6">
                     <select className="form-control" id="numberOfChicken" onChange={this.onSelect}>

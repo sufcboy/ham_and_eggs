@@ -3,16 +3,21 @@ import PropTypes from 'prop-types';
 
 class ParticipantDisplay extends Component {
     render() {
+        this.imageSrc = (this.props.participantType === 'pig') ? 'pig-small.png' : 'chicken-small.png';
+
         return <div>
             <div className="container">
                 <div className="row">
                     <div className="col-lg-4 offset-lg-4 col-md-6 offset-md-3 offset-2 col-8">
                         <div className="card mb-3 shadow-sm">
-                            <svg className="bd-placeholder-img card-img-top" width="100%" height="100" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail">
-                            <title>Placeholder</title>
-                            <rect fill="#55595c" width="100%" height="100%"/>
-                                <text fill="#eceeef" x="50%" y="50%">Thumbnail</text>
-                            </svg>
+                            <div>
+                                {(this.props.participantType === 'pig') ? (
+                                    <img src="/assets/pig-small.png" alt="Pig"/>
+                                ) : (
+                                    <img src="/assets/chicken-small.png" alt="Chicken"/>
+                                )}
+
+                            </div>
                             <div className="card-body">
                                 <p className="card-text">{this.props.participantType} {this.props.participantId}</p>
                             </div>
